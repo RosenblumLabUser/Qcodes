@@ -73,6 +73,21 @@ class N51x1(VisaInstrument):
             val_mapping=create_on_off_val_mapping(on_val=1, off_val=0),
         )
 
+        if 'UNW' in self._options:
+            self.add_parameter(
+                "pulse_modulation",
+                get_cmd="PULM:STAT?",
+                set_cmd="PULM:STAT {}",
+                val_mapping=create_on_off_val_mapping(on_val=1, off_val=0),
+            )
+
+            self.add_parameter(
+                "pulse_modulation_source",
+                get_cmd="PULM:SOUR?",
+                set_cmd="PULM:SOUR {}",
+                val_mapping={"internal": "INT", "external": "EXT"},
+            )
+
         self.connect_message()
 
     def get_idn(self) -> Dict[str, Optional[str]]:
